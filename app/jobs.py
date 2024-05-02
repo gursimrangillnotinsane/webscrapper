@@ -2,6 +2,7 @@
 
 from collections import defaultdict
 import urllib.request
+import bs4
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -113,7 +114,12 @@ def searchJobsJobBank(skill, place):
 
                 
                 #all the jobs are in article 
-                for i in outer_most_point.find_all('article'): # type: ignore
+                if outer_most_point is not None and isinstance(outer_most_point, bs4.element.Tag):
+                        list_items = outer_most_point.find_all('article')
+    # Continue processing the data
+                else:
+                   print("Outer most point is either None or not a Tag object")
+                for i in list_items: 
                 
                                 # Job Title:
                                 
@@ -192,7 +198,7 @@ def searchJobIndeed(skill,place):
                 html=driver.page_source
                 # Scrapping the Web (you can use 'html' or 'lxml')
                 soup = BeautifulSoup(html, 'html.parser')
-            
+              
                 # Outer Most Entry Point of HTML:
                 outer_most_point=soup.find('div',id='mosaic-provider-jobcards')
             
@@ -202,40 +208,44 @@ def searchJobIndeed(skill,place):
                 links=[]
                 salary=[]
                 post_date=[]
-                list_items = outer_most_point.find_all('li') # type: ignore
+               
+                if outer_most_point is not None and isinstance(outer_most_point, bs4.element.Tag):
+                        list_items = outer_most_point.find_all('li')
+    # Continue processing the data
+         
 
-                for i in list_items:
-                # Job Title:
-                    job_title=i.find('h2',{'class':"jobTitle css-14z7akl eu4oa1w0"})
-                    if job_title != None:
-                        jobs=job_title.find('span').text
-                # Company Name:
+                        for i in list_items:
+                                # Job Title:
+                                job_title=i.find('h2',{'class':"jobTitle css-14z7akl eu4oa1w0"})
+                                if job_title != None:
+                                        jobs=job_title.find('span').text
+                                # Company Name:
 
-                    if i.find('span',{'class':'css-92r8pb eu4oa1w0'}) != None:
-                        company=i.find('span',{'class':'css-92r8pb eu4oa1w0'}).text   
-                        
-                # Links: these Href links will take us to full job description
-                    if  i.find('a',{'class':'jcs-JobTitle css-jspxzf eu4oa1w0'})!=None:
-                        links=url+i.find('a',{'class':'jcs-JobTitle css-jspxzf eu4oa1w0'})['href']
-                        
-                # Salary if available:
-                    if i.find('div',{'class':'css-1cvo3fd eu4oa1w0'}) != None:
-                        salary=i.find('div',{'class':'css-1cvo3fd eu4oa1w0'}).text
+                                if i.find('span',{'class':'css-92r8pb eu4oa1w0'}) != None:
+                                        company=i.find('span',{'class':'css-92r8pb eu4oa1w0'}).text   
+                                        
+                                # Links: these Href links will take us to full job description
+                                if  i.find('a',{'class':'jcs-JobTitle css-jspxzf eu4oa1w0'})!=None:
+                                        links=url+i.find('a',{'class':'jcs-JobTitle css-jspxzf eu4oa1w0'})['href']
+                                        
+                                # Salary if available:
+                                if i.find('div',{'class':'css-1cvo3fd eu4oa1w0'}) != None:
+                                        salary=i.find('div',{'class':'css-1cvo3fd eu4oa1w0'}).text
 
-                    else:
-                        salary='No Salary'
+                                else:
+                                        salary='No Salary'
 
-                # Job Post Date:
+                                # Job Post Date:
 
-                    if i.find('span', attrs={'class': 'css-qvloho eu4oa1w0'}) != None:
-                        post_date = i.find('span', attrs={'class': 'css-qvloho eu4oa1w0'}).text
+                                if i.find('span', attrs={'class': 'css-qvloho eu4oa1w0'}) != None:
+                                        post_date = i.find('span', attrs={'class': 'css-qvloho eu4oa1w0'}).text
 
-                # Put everything together in a list of lists for the default dictionary
-                                
-                    indeedList.append([company,jobs,links,salary, post_date])
-                pageNumber=pageNumber+1
-            #checking if there is a next page
-                nextPage=isThereASiteIndeed(url)
+                                # Put everything together in a list of lists for the default dictionary
+                                        
+                        indeedList.append([company,jobs,links,salary, post_date])
+                        pageNumber=pageNumber+1
+                #checking if there is a next page
+                        nextPage=isThereASiteIndeed(url)
     return indeedList
 
 def caller(skill,place):
