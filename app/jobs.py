@@ -24,6 +24,7 @@ service = Service(executable_path='/app/.chrome-for-testing/chromedriver-linux64
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument('--disable-blink-features=AutomationControlled')
 chrome_options.binary_location = "/app/.chrome-for-testing/chrome-linux64/chrome"
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
