@@ -104,7 +104,7 @@ def searchJobsJobBank(skill, place):
 
                 # Outer Most Entry Point of HTML:
                 outer_most_point=soup.find('div',id='ajaxupdateform:result_block')
-                
+
                 # lists where the data are stored:
                 company=[]
                 jobs=[]
@@ -198,10 +198,10 @@ def searchJobIndeed(skill,place):
                 html=driver.page_source
                 # Scrapping the Web (you can use 'html' or 'lxml')
                 soup = BeautifulSoup(html, 'html.parser')
-              
+                print(soup)
                 # Outer Most Entry Point of HTML:
                 outer_most_point=soup.find('div',id='mosaic-provider-jobcards')
-            
+
                 # "UL" lists where the data are stored:
                 company=[]
                 jobs=[]
