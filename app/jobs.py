@@ -213,7 +213,6 @@ def searchJobIndeed(skill,place):
                         list_items = outer_most_point.find_all('li')
     # Continue processing the data
          
-
                         for i in list_items:
                                 # Job Title:
                                 job_title=i.find('h2',{'class':"jobTitle css-14z7akl eu4oa1w0"})
@@ -243,9 +242,9 @@ def searchJobIndeed(skill,place):
                                 # Put everything together in a list of lists for the default dictionary
                                         
                         indeedList.append([company,jobs,links,salary, post_date])
-                        pageNumber=pageNumber+1
+                pageNumber=pageNumber+1
                 #checking if there is a next page
-                        nextPage=isThereASiteIndeed(url)
+                nextPage=isThereASiteIndeed(url)
     return indeedList
 
 def caller(skill,place):
