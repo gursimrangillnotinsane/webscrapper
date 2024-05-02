@@ -214,7 +214,7 @@ def searchJobIndeed(skill,place):
                 html=driver.page_source
                 # Scrapping the Web (you can use 'html' or 'lxml')
                 soup = BeautifulSoup(html, 'html.parser')
-                print(soup)
+               
                 # Outer Most Entry Point of HTML:
                 outer_most_point=soup.find('div',id='mosaic-provider-jobcards')
 
@@ -228,8 +228,10 @@ def searchJobIndeed(skill,place):
                 if outer_most_point is not None and isinstance(outer_most_point, bs4.element.Tag):
                         list_items = outer_most_point.find_all('li')
     # Continue processing the data
-         
+                        print(list_items)
                         for i in list_items:
+                                print("i here\n\n\n\n\n\n\n\n\n")
+                                print(i)
                                 # Job Title:
                                 job_title=i.find('h2',{'class':"jobTitle css-14z7akl eu4oa1w0"})
                                 if job_title != None:
