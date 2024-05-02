@@ -28,6 +28,23 @@ chrome_options.add_argument('--disable-blink-features=AutomationControlled')
 chrome_options.binary_location = "/app/.chrome-for-testing/chrome-linux64/chrome"
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
+# Define proxy settings
+proxy_address = "111.3.102.135"
+proxy_port = "30001"
+
+
+# Configure proxy
+proxy_options = {
+    'proxy': {
+        'http': f'http://{proxy_address}:{proxy_port}',
+        'https': f'https://{proxy_address}:{proxy_port}',
+        'no_proxy': 'localhost,127.0.0.1'  # Optional: Exclude localhost and local addresses from proxy
+    }
+}
+
+# Add proxy options to Chrome options
+chrome_options.add_argument(f"--proxy-server={proxy_address}:{proxy_port}")
+
 # a function to check if there is a website in next page
 def isThereSite(url):
         headers = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Mobile Safari/537.36'}
