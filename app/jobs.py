@@ -11,6 +11,7 @@ from urllib.request import Request, urlopen
 import time
 import re
 from datetime import datetime
+from selenium_stealth import stealth
 import random
 
 indeed_posts=[]
@@ -19,7 +20,7 @@ indeed_posts=[]
 #
 #
 #
-
+headers = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Mobile Safari/537.36'}
 
 chrome_options = webdriver.ChromeOptions()
 service = Service(executable_path='/app/.chrome-for-testing/chromedriver-linux64/chromedriver')
@@ -27,38 +28,20 @@ chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+chrome_options.add_argument(f"user-agent={headers}")
+
 
 chrome_options.binary_location = "/app/.chrome-for-testing/chrome-linux64/chrome"
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
-
-
-PROXY = "87.83.230.229:8080" # your proxy address
-
-## Set Chrome Options
-options = uc.ChromeOptions()
-options.add_argument(f'--proxy-server={PROXY}')
-user_agents = [
-    # Add your list of user agents here
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15',
-]
-
-# select random user agent
-user_agent = random.choice(user_agents)
-
-# pass in selected user agent as an argument
-options.add_argument(f'user-agent={user_agent}')
-
-# Initialize the WebDriver
-driver = uc.Chrome(options=options)
-
-
+stealth(driver,
+        languages=["en-US", "en"],
+        vendor="Google Inc.",
+        platform="Win32",
+        webgl_vendor="Intel Inc.",
+        renderer="Intel Iris OpenGL Engine",
+        fix_hairline=True,
+        )
 
 # a function to check if there is a website in next page
 def isThereSite(url):
