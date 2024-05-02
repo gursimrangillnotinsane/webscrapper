@@ -4,6 +4,7 @@ from collections import defaultdict
 import urllib.request
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from urllib.request import Request, urlopen
 import time
 import re
@@ -16,6 +17,14 @@ indeed_posts=[]
 #
 #
 
+
+chrome_options = webdriver.ChromeOptions()
+service = Service(executable_path='./chromedriver.exe')
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.binary_location = "/app/.chromedriver/bin/chromedriver"
+driver = webdriver.Chrome(service=service, options=chrome_options)
 
 # a function to check if there is a website in next page
 def isThereSite(url):
@@ -104,7 +113,7 @@ def searchJobsJobBank(skill, place):
 
                 
                 #all the jobs are in article 
-                for i in outer_most_point.find_all('article'):
+                for i in outer_most_point.find_all('article'): # type: ignore
                 
                                 # Job Title:
                                 
@@ -193,7 +202,7 @@ def searchJobIndeed(skill,place):
                 links=[]
                 salary=[]
                 post_date=[]
-                list_items = outer_most_point.find_all('li')
+                list_items = outer_most_point.find_all('li') # type: ignore
 
                 for i in list_items:
                 # Job Title:
