@@ -6,10 +6,12 @@ import bs4
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+import undetected_chromedriver as uc
 from urllib.request import Request, urlopen
 import time
 import re
 from datetime import datetime
+import random
 
 indeed_posts=[]
 # CANADIAN BANK
@@ -25,25 +27,38 @@ chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+
 chrome_options.binary_location = "/app/.chrome-for-testing/chrome-linux64/chrome"
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
-# Define proxy settings
-proxy_address = "111.3.102.135"
-proxy_port = "30001"
 
 
-# Configure proxy
-proxy_options = {
-    'proxy': {
-        'http': f'http://{proxy_address}:{proxy_port}',
-        'https': f'https://{proxy_address}:{proxy_port}',
-        'no_proxy': 'localhost,127.0.0.1'  # Optional: Exclude localhost and local addresses from proxy
-    }
-}
+PROXY = "87.83.230.229:8080" # your proxy address
 
-# Add proxy options to Chrome options
-chrome_options.add_argument(f"--proxy-server={proxy_address}:{proxy_port}")
+## Set Chrome Options
+options = uc.ChromeOptions()
+options.add_argument(f'--proxy-server={PROXY}')
+user_agents = [
+    # Add your list of user agents here
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15',
+]
+
+# select random user agent
+user_agent = random.choice(user_agents)
+
+# pass in selected user agent as an argument
+options.add_argument(f'user-agent={user_agent}')
+
+# Initialize the WebDriver
+driver = uc.Chrome(options=options)
+
+
 
 # a function to check if there is a website in next page
 def isThereSite(url):
