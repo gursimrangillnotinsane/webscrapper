@@ -19,11 +19,11 @@ indeed_posts=[]
 
 
 chrome_options = webdriver.ChromeOptions()
-service = Service(executable_path='./chromedriver.exe')
+service = Service(executable_path='/app/.chrome-for-testing/chromedriver-linux64/chromedriver')
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
-chrome_options.binary_location = "/app/.chromedriver/bin/chromedriver"
+chrome_options.binary_location = "/app/.chrome-for-testing/chrome-linux64/chrome"
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
 # a function to check if there is a website in next page
