@@ -191,6 +191,7 @@ def searchJobIndeed(skill,place):
                 if pageNumber==5:
                         break
             # Connecting to  Indeed
+                
                 url = 'https://ca.indeed.com/jobs?q=' + skill + '&l=' + place + '&sort=date' +'&start='+ str(pageNumber)
                 print(url)
                 #url="https://ca.indeed.com/jobs?q=programming&l=Bradford%2C+ON&from=searchOnHP&vjk=41b3ffa913ed4dc6"
@@ -216,12 +217,12 @@ def searchJobIndeed(skill,place):
                         print(len(list_items))
     # Continue processing the data
                         for i in list_items:
-                                print(i)
+                               
                                 # Job Title:
                                 job_title=i.find('h2',{'class':"jobTitle css-14z7akl eu4oa1w0"})
                                 if job_title != None:
                                         jobs=job_title.find('a').text
-                                        print(jobs)
+                                        
                                 # Company Name:
 
                                 if i.find('span',{'class':'css-92r8pb eu4oa1w0'}) != None:
@@ -245,7 +246,7 @@ def searchJobIndeed(skill,place):
 
                                 # Put everything together in a list of lists for the default dictionary
                                         
-                        indeedList.append([company,jobs,links,salary, post_date])
+                                indeedList.append([company,jobs,links,salary, post_date])
                         
                 pageNumber=pageNumber+1
                 #checking if there is a next page
