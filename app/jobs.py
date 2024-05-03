@@ -72,26 +72,25 @@ def isThereASiteIndeed(url):
                 return False
 
 # a function to srap a website which take skill, place, sortBy and sheet number as argument
-def searchJobsJobBank(skill, place):
+def searchJobsJobBank(skill, place,page):
         jobbankList=[]
    
-        # we start with page number one as increament 1 
-        pageNumber=1
+        maxPage=page+3
         # a boolean if there is a next page, it is true otherwise false
         nextPage=True
         #printing the current skill we are looking for
         print(skill)
         #a loop which ends when there are no next page 
         while nextPage:
-                if pageNumber==4:
+                if page==maxPage:
                         break
                #default header
                 headers = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko)         Chrome/92.0.4515.107 Mobile Safari/537.36'}
 
                 #url of canadian bank jobs which take skill as the searchstring and pagenumber as page a well as place
-                url="https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring="+skill+"&page="+str(pageNumber)+"&locationstring="+place+"&sort=D";
+                url="https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring="+skill+"&page="+str(page)+"&locationstring="+place+"&sort=D";
                 #printing the number of page we are scannign on
-                print("Scanning the "+ str(pageNumber)+" page")
+                print("Scanning the "+ str(page)+" page")
                
                 # scrapping the website in try block if the website is down 
                 try:
@@ -173,31 +172,30 @@ def searchJobsJobBank(skill, place):
                                 # Put everything together in a list of lists for the default dictionary
                                 jobbankList.append([company,jobs,links,salary, post_date])
             #incrementing the pagenumber
-                pageNumber=pageNumber+1
+                page=page+1
             #checking if there is a next page
                 nextPage=isThereSite(url)
         return jobbankList
 
-def searchJobIndeed(skill,place):
+def searchJobIndeed(skill,place,page):
     # this was used for the person contacting me who had these details for their system
     headers = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Mobile Safari/537.36'}
 
-    pageNumber=1
+    maxPage=page+30
     indeedList=[]
     nextPage=True
         #printing the current skill we are looking for
         #a loop which ends when there are no next page 
     while nextPage:      
-                if pageNumber==5:
+                if page==maxPage:
                         break
             # Connecting to  Indeed
                 
-                url = 'https://ca.indeed.com/jobs?q=' + skill + '&l=' + place + '&sort=date' +'&start='+ str(pageNumber)
+                url = 'https://ca.indeed.com/jobs?q=' + skill + '&l=' + place + '&sort=date' +'&start='+ str(page)
                 print(url)
                 #url="https://ca.indeed.com/jobs?q=programming&l=Bradford%2C+ON&from=searchOnHP&vjk=41b3ffa913ed4dc6"
             
                 driver.get(url)
-                time.sleep(1)
                 html=driver.page_source
                 # Scrapping the Web (you can use 'html' or 'lxml')
                 soup = BeautifulSoup(html, 'html.parser')
@@ -248,14 +246,14 @@ def searchJobIndeed(skill,place):
                                         
                                 indeedList.append([company,jobs,links,salary, post_date])
                         
-                pageNumber=pageNumber+1
+                page=page+10
                 #checking if there is a next page
                 nextPage=isThereASiteIndeed(url)
     return indeedList
 
-def caller(skill,place):
-       indeedList=searchJobIndeed(skill,place)
-       jobbankList=searchJobsJobBank(skill,place)
+def caller(skill,place,page):
+       indeedList=searchJobIndeed(skill,place,page)
+       jobbankList=searchJobsJobBank(skill,place,page)
        return indeedList,jobbankList
 
 

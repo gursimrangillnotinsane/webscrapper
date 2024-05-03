@@ -22,7 +22,7 @@ async def root():
 
 @app.post("/get")
 def get_posts(title:schemas.userInput):
-    indeed,jonbank=jobs.caller(title.skill,title.location)
+    indeed,jonbank=jobs.caller(title.skill,title.location,title.pagenumber)
 
     return {"indeed":indeed,"jobank":jonbank}
 
