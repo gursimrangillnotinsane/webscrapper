@@ -230,7 +230,7 @@ def searchJobIndeed(skill,place):
                                         
                                 # Links: these Href links will take us to full job description
                                 if  i.find('a',{'class':'jcs-JobTitle css-jspxzf eu4oa1w0'})!=None:
-                                        links=url+i.find('a',{'class':'jcs-JobTitle css-jspxzf eu4oa1w0'})['href']
+                                        links="https://indeed.com"+i.find('a',{'class':'jcs-JobTitle css-jspxzf eu4oa1w0'})['href']
                                         
                                 # Salary if available:
                                 if i.find('div',{'class':'css-1cvo3fd eu4oa1w0'}) != None:
