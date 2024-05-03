@@ -235,7 +235,7 @@ def searchJobIndeed(skill,place):
                                 # Job Title:
                                 job_title=i.find('h2',{'class':"jobTitle css-14z7akl eu4oa1w0"})
                                 if job_title != None:
-                                        jobs=job_title.find('span').text
+                                        jobs=job_title.find('a').text
                                 # Company Name:
 
                                 if i.find('span',{'class':'css-92r8pb eu4oa1w0'}) != None:
