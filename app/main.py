@@ -20,9 +20,15 @@ app.add_middleware(
 async def root():
     return {"message": f"Hello "}
 
-@app.post("/get")
+@app.post("/jobank/get")
 def get_posts(title:schemas.userInput):
-    indeed,jonbank=jobs.caller(title.skill,title.location,title.pagenumber)
+    jonbank=jobs.searchJobsJobBank(title.skill,title.location,title.pagenumber)
 
-    return {"indeed":indeed,"jobank":jonbank}
+    return jonbank
+
+@app.post("/indeed/get")
+def get_INposts(title:schemas.userInput):
+    indeed=jobs.searchJobIndeed(title.skill,title.location,title.pagenumber)
+
+    return indeed
 

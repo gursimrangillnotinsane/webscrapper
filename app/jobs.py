@@ -75,7 +75,7 @@ def isThereASiteIndeed(url):
 def searchJobsJobBank(skill, place,page):
         jobbankList=[]
    
-        maxPage=page+3
+        maxPage=page+5
         # a boolean if there is a next page, it is true otherwise false
         nextPage=True
         #printing the current skill we are looking for
@@ -181,7 +181,7 @@ def searchJobIndeed(skill,place,page):
     # this was used for the person contacting me who had these details for their system
     headers = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Mobile Safari/537.36'}
 
-    maxPage=page+30
+    maxPage=page+50
     indeedList=[]
     nextPage=True
         #printing the current skill we are looking for
@@ -246,15 +246,9 @@ def searchJobIndeed(skill,place,page):
                                         
                                 indeedList.append([company,jobs,links,salary, post_date])
                         
-                page=page+10
+                page=page+9
                 #checking if there is a next page
                 nextPage=isThereASiteIndeed(url)
     return indeedList
-
-def caller(skill,place,page):
-       indeedList=searchJobIndeed(skill,place,page)
-       jobbankList=searchJobsJobBank(skill,place,page)
-       return indeedList,jobbankList
-
 
 
