@@ -92,19 +92,7 @@ def searchJobsJobBank(skill, place):
                 url="https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring="+skill+"&page="+str(pageNumber)+"&locationstring="+place+"&sort=D";
                 #printing the number of page we are scannign on
                 print("Scanning the "+ str(pageNumber)+" page")
-                """
-                #if user selected to sort by latest
-                if sortBy=="Latest":
-                        #modify the url 
-                        url=url+"&sort=D"
-                #if user selected to sort by best-match
-                elif sortBy=="Best-Match":
-                        #modift the url
-                        url=url+"&sort=M"
-                """
-        
-                
- 
+               
                 # scrapping the website in try block if the website is down 
                 try:
                     req = urllib.request.Request(url,headers=headers)
@@ -132,9 +120,6 @@ def searchJobsJobBank(skill, place):
                 #all the jobs are in article 
                 if outer_most_point is not None and isinstance(outer_most_point, bs4.element.Tag):
                         list_items = outer_most_point.find_all('article')
-    # Continue processing the data
-                else:
-                   print("Outer most point is either None or not a Tag object")
                 for i in list_items: 
                 
                                 # Job Title:
@@ -191,7 +176,7 @@ def searchJobsJobBank(skill, place):
                 pageNumber=pageNumber+1
             #checking if there is a next page
                 nextPage=isThereSite(url)
-                return jobbankList
+        return jobbankList
 
 def searchJobIndeed(skill,place):
     # this was used for the person contacting me who had these details for their system
@@ -211,6 +196,7 @@ def searchJobIndeed(skill,place):
                 #url="https://ca.indeed.com/jobs?q=programming&l=Bradford%2C+ON&from=searchOnHP&vjk=41b3ffa913ed4dc6"
             
                 driver.get(url)
+                time.sleep(1)
                 html=driver.page_source
                 # Scrapping the Web (you can use 'html' or 'lxml')
                 soup = BeautifulSoup(html, 'html.parser')
@@ -227,6 +213,7 @@ def searchJobIndeed(skill,place):
                
                 if outer_most_point is not None and isinstance(outer_most_point, bs4.element.Tag):
                         list_items = outer_most_point.find_all('li')
+                        print(len(list_items))
     # Continue processing the data
                         for i in list_items:
                             
@@ -258,6 +245,7 @@ def searchJobIndeed(skill,place):
                                 # Put everything together in a list of lists for the default dictionary
                                         
                         indeedList.append([company,jobs,links,salary, post_date])
+                        
                 pageNumber=pageNumber+1
                 #checking if there is a next page
                 nextPage=isThereASiteIndeed(url)
