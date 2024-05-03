@@ -216,11 +216,12 @@ def searchJobIndeed(skill,place):
                         print(len(list_items))
     # Continue processing the data
                         for i in list_items:
-                            
+                                print(i)
                                 # Job Title:
                                 job_title=i.find('h2',{'class':"jobTitle css-14z7akl eu4oa1w0"})
                                 if job_title != None:
                                         jobs=job_title.find('a').text
+                                        print(jobs)
                                 # Company Name:
 
                                 if i.find('span',{'class':'css-92r8pb eu4oa1w0'}) != None:
