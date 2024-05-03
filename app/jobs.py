@@ -83,7 +83,7 @@ def searchJobsJobBank(skill, place):
         print(skill)
         #a loop which ends when there are no next page 
         while nextPage:
-                if pageNumber==10:
+                if pageNumber==4:
                         break
                #default header
                 headers = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko)         Chrome/92.0.4515.107 Mobile Safari/537.36'}
@@ -188,7 +188,7 @@ def searchJobIndeed(skill,place):
         #printing the current skill we are looking for
         #a loop which ends when there are no next page 
     while nextPage:      
-                if pageNumber==10:
+                if pageNumber==5:
                         break
             # Connecting to  Indeed
                 url = 'https://ca.indeed.com/jobs?q=' + skill + '&l=' + place + '&sort=date' +'&start='+ str(pageNumber)
