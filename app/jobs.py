@@ -246,7 +246,7 @@ def searchJobIndeed(skill,place,page):
                                         
                                 indeedList.append([company,jobs,links,salary, post_date])
                         
-                page=page+9
+                page=page+10
                 #checking if there is a next page
                 nextPage=isThereASiteIndeed(url)
     return indeedList
