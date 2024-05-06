@@ -281,9 +281,9 @@ def searchJobsLinkdin(skill,place,page):
                 print(url)
                 #url="https://www.linkedin.com/jobs/search/?currentJobId=3899546145&geoId=105149290&keywords=programming&location=Ontario%2C%20Canada&origin=JOBS_HOME_SEARCH_BUTTON&refresh=true"
                 #url="https://ca.indeed.com/jobs?q=programming&l=Bradford%2C+ON&from=searchOnHP&vjk=41b3ffa913ed4dc6"
-                dr = webdriver.Chrome()
-                dr.get(url)
-                html=dr.page_source
+               
+                driver.get(url)
+                html=driver.page_source
                 # Scrapping the Web (you can use 'html' or 'lxml')
                 soup = BeautifulSoup(html, 'html.parser')
             
