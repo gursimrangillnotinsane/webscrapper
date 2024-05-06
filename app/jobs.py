@@ -268,14 +268,14 @@ def searchJobsLinkdin(skill,place,page):
     # this was used for the person contacting me who had these details for their system
     headers = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Mobile Safari/537.36'}
 
-    pageNumber=1
+   
     linkdinlist=[]
     nextPage=True
     maxPage=page+5
         #printing the current skill we are looking for
         #a loop which ends when there are no next page 
     while nextPage:      
-                if pageNumber==maxPage:
+                if page==maxPage:
                         break
                 url =" https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords="+skill+"&location="+place+"&start="+str(page)
                 print(url)
