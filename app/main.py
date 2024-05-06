@@ -32,3 +32,8 @@ def get_INposts(title:schemas.userInput):
 
     return indeed
 
+@app.post("/linkdin/get")
+def get_LIposts(title:schemas.userInput):
+    linkdin=jobs.searchJobsLinkdin(title.skill,title.location,title.pagenumber)
+
+    return linkdin

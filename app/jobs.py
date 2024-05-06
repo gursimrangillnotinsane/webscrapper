@@ -71,6 +71,18 @@ def isThereASiteIndeed(url):
                     return True
                 return False
 
+def isThereASiteLinkdin(url):
+                dr = webdriver.Chrome()
+                dr.get(url)
+                html=dr.page_source
+                # Scrapping the Web (you can use 'html' or 'lxml')
+                soup = BeautifulSoup(html, 'html.parser')
+            
+                # Outer Most Entry Point of HTML:
+                if soup.find('li'):
+                    return True
+                return False
+
 # a function to srap a website which take skill, place, sortBy and sheet number as argument
 def searchJobsJobBank(skill, place,page):
         jobbankList=[]
@@ -251,4 +263,73 @@ def searchJobIndeed(skill,place,page):
                 nextPage=isThereASiteIndeed(url)
     return indeedList
 
+
+def searchJobsLinkdin(skill,place,page):
+    # this was used for the person contacting me who had these details for their system
+    headers = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Mobile Safari/537.36'}
+
+    pageNumber=1
+    linkdinlist=[]
+    nextPage=True
+    maxPage=page+5
+        #printing the current skill we are looking for
+        #a loop which ends when there are no next page 
+    while nextPage:      
+                if pageNumber==maxPage:
+                        break
+                url =" https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords="+skill+"&location="+place+"&start="+str(page)
+                print(url)
+                #url="https://www.linkedin.com/jobs/search/?currentJobId=3899546145&geoId=105149290&keywords=programming&location=Ontario%2C%20Canada&origin=JOBS_HOME_SEARCH_BUTTON&refresh=true"
+                #url="https://ca.indeed.com/jobs?q=programming&l=Bradford%2C+ON&from=searchOnHP&vjk=41b3ffa913ed4dc6"
+                dr = webdriver.Chrome()
+                dr.get(url)
+                html=dr.page_source
+                # Scrapping the Web (you can use 'html' or 'lxml')
+                soup = BeautifulSoup(html, 'html.parser')
+            
+                # Outer Most Entry Point of HTML:
+                outer_most_point=soup.find('body')
+            
+                # "UL" lists where the data are stored:
+                company=[]
+                jobs=[]
+                links=[]
+                salary=[]
+                post_date=[]
+                if outer_most_point is not None and isinstance(outer_most_point, bs4.element.Tag):
+                        list_items = outer_most_point.find_all('li')
+
+                for i in list_items:
+                # Job Title:
+                    job_title=i.find('h3',{'class':"base-search-card__title"})
+                    if job_title != None:
+                        jobs=job_title.text.strip("\n").strip()
+                # Company Name:
+
+                    if i.find('h4',{'class':'base-search-card__subtitle'}) != None:
+                        company=i.find('h4',{'class':'base-search-card__subtitle'}).text.strip("\n").strip()
+                        
+                # Links: these Href links will take us to full job description
+                    if  i.find('a',{'class':'base-card__full-link absolute top-0 right-0 bottom-0 left-0 p-0 z-[2]'})!=None:
+                        links=i.find('a',{'class':'base-card__full-link absolute top-0 right-0 bottom-0 left-0 p-0 z-[2]'})['href']
+                        
+                # Salary if available:
+                    if i.find('div',{'class':'css-1cvo3fd eu4oa1w0'}) != None:
+                        salary=i.find('div',{'class':'css-1cvo3fd eu4oa1w0'}).text
+
+                    else:
+                        salary='No Salary'
+
+                # Job Post Date:
+
+                    if i.find('span', attrs={'class': 'job-search-card__location'}) != None:
+                        post_date = i.find('span', attrs={'class': 'job-search-card__location'}).text.strip("\n").strip()
+
+                # Put everything together in a list of lists for the default dictionary
+                                
+                    linkdinlist.append([company,jobs,links,salary, post_date])
+                page=page+1
+                  #checking if there is a next page
+                nextPage=isThereASiteLinkdin(url)
+    return linkdinlist
 
