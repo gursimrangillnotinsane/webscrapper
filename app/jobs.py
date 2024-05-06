@@ -72,9 +72,9 @@ def isThereASiteIndeed(url):
                 return False
 
 def isThereASiteLinkdin(url):
-                dr = webdriver.Chrome()
-                dr.get(url)
-                html=dr.page_source
+               
+                driver.get(url)
+                html=driver.page_source
                 # Scrapping the Web (you can use 'html' or 'lxml')
                 soup = BeautifulSoup(html, 'html.parser')
             
