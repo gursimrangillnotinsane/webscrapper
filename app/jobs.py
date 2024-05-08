@@ -13,6 +13,7 @@ import re
 from datetime import datetime
 from selenium_stealth import stealth
 import random
+from webdriver_manager.chrome import ChromeDriverManager
 
 indeed_posts=[]
 # CANADIAN BANK
@@ -23,7 +24,6 @@ indeed_posts=[]
 headers = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Mobile Safari/537.36'}
 
 chrome_options = webdriver.ChromeOptions()
-service = Service(executable_path='/app/.chrome-for-testing/chromedriver-linux64/chromedriver')
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
@@ -31,8 +31,8 @@ chrome_options.add_argument('--disable-blink-features=AutomationControlled')
 chrome_options.add_argument(f"user-agent={headers}")
 
 
-chrome_options.binary_location = "/app/.chrome-for-testing/chrome-linux64/chrome"
-driver = webdriver.Chrome(service=service, options=chrome_options)
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+
 
 stealth(driver,
         languages=["en-US", "en"],
