@@ -38,16 +38,16 @@ Ensure you have the following installed:
 
 ### Clone this repository:
 
-    git clone https://github.com/yourusername/jobful.git
+    git clone https://github.com/gursimrangillnotinsane/webscrapper.git
 
 ### Install dependencies:
 
-    cd jobful
+    cd webscrapper
     pip install -r requirements.txt
 
 ### Run the FastAPI server:
 
-    uvicorn main:app --reload
+    uvicorn app.main:app --reload
 
 Access the API at: http://127.0.0.1:8000
 
