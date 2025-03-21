@@ -13,14 +13,14 @@
 ## API Endpoints
 ### `GET /`
 - **Description**: Returns a simple greeting message.
-  
-### `POST /jobank/get/`
-- **Description**: Retrieves job listings from JobBank.
+- 
+## `DEPRECATED`
+    ### `POST /jobank/get/`
+    - **Description**: Retrieves job listings from JobBank.
 
-### `POST /indeed/get`
-- **Description**:  Retrieves job listings from Indeed.
+    ### `POST /indeed/get`
+    - **Description**:  Retrieves job listings from Indeed.
  
-
 ### `POST/linkdin/get`
 - **Description**:Retrieves job listings from LinkedIn.
 
