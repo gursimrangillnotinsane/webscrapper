@@ -20,17 +20,18 @@ app.add_middleware(
 async def root():
     return {"message": f"Hello "}
 
-@app.post("/jobank/get")
-def get_posts(title:schemas.userInput):
-    jonbank=jobs.searchJobsJobBank(title.skill,title.location,title.pagenumber)
+# Disabling jobank and indeed as its facing difficulty in passing the verification
+# @app.post("/jobank/get")
+# def get_posts(title:schemas.userInput):
+#     jonbank=jobs.searchJobsJobBank(title.skill,title.location,title.pagenumber)
 
-    return jonbank
+#     return jonbank
 
-@app.post("/indeed/get")
-def get_INposts(title:schemas.userInput):
-    indeed=jobs.searchJobIndeed(title.skill,title.location,title.pagenumber)
+# @app.post("/indeed/get")
+# def get_INposts(title:schemas.userInput):
+#     indeed=jobs.searchJobIndeed(title.skill,title.location,title.pagenumber)
 
-    return indeed
+#     return indeed
 
 @app.post("/linkdin/get")
 def get_LIposts(title:schemas.userInput):

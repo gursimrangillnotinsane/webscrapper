@@ -206,7 +206,8 @@ def searchJobIndeed(skill,place,page):
                 url = 'https://ca.indeed.com/jobs?q=' + skill + '&l=' + place + '&sort=date' +'&start='+ str(page)
                 print(url)
                 #url="https://ca.indeed.com/jobs?q=programming&l=Bradford%2C+ON&from=searchOnHP&vjk=41b3ffa913ed4dc6"
-            
+                driver.implicitly_wait(2)
+                print("h")
                 driver.get(url)
                 html=driver.page_source
                 # Scrapping the Web (you can use 'html' or 'lxml')
